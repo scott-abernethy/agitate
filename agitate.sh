@@ -19,7 +19,7 @@ for repo in $(find $SEARCH -type d -name ".git" 2>/dev/null); do
 	BRANCHINFO=$(git status -b --porcelain | sed -n 's/^##.*\[\(.*\)\]/[\1]/p' | head -n 1)
 	CHANGED=$(git status --porcelain | sed -n '/^ [ADM]/p' | wc -l | sed 's/ //g')
 	if [ $CHANGED -eq 0 ]; then
-		if [ -z $QUIETM ]; then
+		if [ "$BRANCHINFO" != "" ] || [ -z $QUIETM ]; then
 			printf "%-30s  \e[1;32m%-12s\e[0m \e[1;36m%s\e[0m\n" $SHORTDIR "clean" "$BRANCHINFO"
 		fi
 	else
